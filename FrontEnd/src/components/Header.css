@@ -1,0 +1,152 @@
+.navbar-morph {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: linear-gradient( rgb(19, 1, 1), #991b1b);
+  background-size: 300% 300%;
+  animation: gradientMove 4s ease infinite;
+  z-index: 1000;
+}
+
+@keyframes gradientMove {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.morph-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  height: 100%;
+}
+
+.morph-logo {
+    display: flex;
+  
+}
+.morph-logo1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+ margin-right: 35% ;
+}
+
+
+.morph-menu {
+  display: flex;
+  gap: 15px;
+}
+
+.morph-item {
+  color: white;
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.morph-item:hover {
+  color: white;
+  background-color: rgb(19, 1, 1);
+}
+
+.login-button {
+  background-color: #991b1b;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-button:hover {
+  color: white;
+  background-color: rgb(19, 1, 1);
+}
+
+
+
+.logo-img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  vertical-align: middle;
+  border-radius: 50%; /* Optional: if you want a circular logo */
+}
+.morph-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 28px;
+  font-weight: 800;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  animation: bounce 2s infinite;
+}
+
+
+
+
+.main-overlay {
+  padding-top: 100px; 
+  text-align: center;
+  max-width: auto;
+}
+
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-button {
+  background-color: #e74c3c;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 180px;
+  border-radius: 6px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+}
+
+.dropdown-content a {
+  padding: 10px 14px;
+  display: block;
+  color: rgb(19, 1, 1);
+  text-decoration: none;
+}
+
+.dropdown-content a:hover {
+  background-color: grey;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
