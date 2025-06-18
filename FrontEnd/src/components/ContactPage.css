@@ -4,7 +4,7 @@
 
 .contact-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #dbeafe 0%, #ffffff 50%, #fef2f2 100%);
+  background-color: black;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 }
 
@@ -22,13 +22,14 @@
 .main-title2 {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #111827;
+  color: #991b1b;
   margin-bottom: 16px;
+  margin-top: 50px;
 }
 
 .main-description {
   font-size: 1.25rem;
-  color: #6b7280;
+  color: white;
   max-width: 768px;
   margin: 0 auto;
   line-height: 1.6;
@@ -46,7 +47,7 @@
 }
 
 .contact-info-card {
-  background: white;
+  background: #565656;
   border-radius: 16px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   padding: 32px;
@@ -124,23 +125,23 @@
 }
 
 .emergency .contact-title {
-  color: #b91c1c;
+  color: #991b1b;
 }
 
 .general .contact-title {
-  color: #1d4ed8;
+  color: #1040c5;
 }
 
 .email .contact-title {
-  color: #059669;
+  color: #058b60;
 }
 
 .address .contact-title {
-  color: #7c3aed;
+  color: #662ec7;
 }
 
 .hours .contact-title {
-  color: #374151;
+  color: #28313e;
 }
 
 .contact-number {
@@ -203,7 +204,7 @@
 }
 
 .emergency-notice {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  background: linear-gradient(135deg,#3e0505 0%, #991b1b);
   border-radius: 16px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   padding: 24px;
@@ -245,7 +246,7 @@
 }
 
 .info-card {
-  background: white;
+  background: rgb(174, 173, 173);
   border-radius: 12px;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
   padding: 24px;
@@ -292,7 +293,7 @@
 }
 
 .info-description {
-  color: #6b7280;
+  color: #313338;
   line-height: 1.5;
   margin: 0;
 }
