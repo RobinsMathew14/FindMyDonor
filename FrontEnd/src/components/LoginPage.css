@@ -8,86 +8,250 @@ body {
 
 #d1 {
   width: 80%;
-  max-width: 350px;
+  max-width: 380px;
   margin: 60px auto;
-  padding: 30px;
+  padding: 35px;
   text-align: center;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.2); 
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.25); 
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3),
+              0 5px 15px rgba(174, 16, 16, 0.1);
   display: block;
-  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#d1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(174, 16, 16, 0.05), rgba(255, 255, 255, 0.1));
+  border-radius: 20px;
+  z-index: -1;
 }
 
 
 h1 {
-  font-size: 2em;
-  margin-bottom: 0;
-  color: #3e0707;
+  font-size: 2.2em;
+  margin-bottom: 5px;
+  background: linear-gradient(45deg, #3e0707, #991b1b, #3e0707);
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: titleGradient 3s ease-in-out infinite;
+  font-weight: bold;
+  text-shadow: 0 0 20px rgba(174, 16, 16, 0.3);
+}
+
+@keyframes titleGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 h2 {
-  font-size: 1em;
-  color: black;
-  margin-top: 5px;
+  font-size: 1.1em;
+  color: #333;
+  margin-top: 8px;
+  margin-bottom: 25px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
-
 #i1 {
-  width: 150px;
-  height: 150px;
-  margin: 20px auto;
+  width: 130px;
+  height: 130px;
+  margin: 15px auto 20px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3),
+              0 4px 15px rgba(174, 16, 16, 0.2);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+#i1:hover {
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: 0 12px 35px rgba(174, 16, 16, 0.4);
 }
 
 input {
   width: 100%;
-  padding: 12px;
+  padding: 14px 16px;
   margin: 10px 0;
-  background-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   color: #333;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  border: 2px solid rgba(174, 16, 16, 0.2);
+  border-radius: 10px;
   font-size: 1em;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  font-family: inherit;
 }
 
+input:focus {
+  outline: none;
+  border-color: rgb(174, 16, 16);
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 15px rgba(174, 16, 16, 0.2);
+  transform: translateY(-2px);
+}
+
+input::placeholder {
+  color: #666;
+  opacity: 0.8;
+}
 
 button {
-  padding: 12px 20px;
-  background-color: #991b1b;
+  padding: 15px 25px;
+  background: linear-gradient(135deg, #991b1b, rgba(174, 16, 16, 0.9));
   color: white;
   border: none;
   cursor: pointer;
-  margin-top: 10px;
-  border-radius: 6px;
+  margin-top: 20px;
+  border-radius: 10px;
   width: 100%;
-  font-size: 1em;
-  transition: background-color 0.3s ease;
+  font-size: 1.1em;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(174, 16, 16, 0.3);
 }
 
-button:hover {
-  background-color: #7f1414;
+button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
 }
 
+button:hover::before {
+  left: 100%;
+}
+
+button:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(174, 16, 16, 0.9), #7f1414);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(174, 16, 16, 0.4);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.demo-credentials {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 15px 0;
+  font-size: 0.8rem;
+  text-align: left;
+  backdrop-filter: blur(10px);
+}
+
+.demo-credentials p {
+  margin: 4px 0;
+  color: rgba(51, 51, 51, 0.9);
+}
+
+.demo-credentials p:first-child {
+  color: #3b82f6;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+button:active {
+  transform: translateY(-1px);
+}
 
 .signup {
-  margin-top: 12px;
+  margin-top: 15px;
+  margin-bottom: 10px;
   color: #3e0707;
-  font-size: 0.9em;
+  font-size: 0.95em;
+  font-weight: 500;
 }
 
 .signup a {
-  color: #3e0707;
-  text-decoration: underline;
+  color: #991b1b;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.signup a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #991b1b;
+  transition: width 0.3s ease;
+}
+
+.signup a:hover::after {
+  width: 100%;
+}
+
+.signup a:hover {
+  color: #7f1414;
 }
 .login-wrapper {
   position: relative;
-  background-color: black;
+  background: linear-gradient(135deg, #000000 0%, #1a0000 50%, #000000 100%);
+  background-size: 400% 400%;
+  animation: backgroundShift 20s ease infinite;
   min-height: 100vh;
   overflow: hidden;
+}
+
+@keyframes backgroundShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .background-animation {
@@ -100,19 +264,29 @@ button:hover {
 
 .platelet {
   position: absolute;
-  width: 100px;
-  height: 100px;
-  opacity: 0.6;
+  width: 80px;
+  height: 80px;
+  opacity: 0.4;
   animation: float 15s linear infinite;
   pointer-events: none;
+  border-radius: 50%;
+  filter: brightness(0.8) contrast(1.2);
 }
 
 @keyframes float {
   0% {
-    transform: translateY(100vh) rotate(0deg);
+    transform: translateY(100vh) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.4;
+  }
+  90% {
+    opacity: 0.4;
   }
   100% {
-    transform: translateY(-100vh) rotate(360deg);
+    transform: translateY(-100vh) rotate(360deg) scale(1.2);
+    opacity: 0;
   }
 }
 

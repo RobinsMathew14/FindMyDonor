@@ -1,0 +1,1031 @@
+{
+	"info": {
+		"_postman_id": "findmydonor-api-collection",
+		"name": "FindMyDonor API Collection",
+		"description": "Complete API collection for FindMyDonor Blood Donation Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{auth_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000/api",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "refresh_token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "🔐 Authentication",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					}
+				},
+				{
+					"name": "API Documentation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}",
+							"host": [
+								"{{base_url}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Register Donor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.data.token) {",
+									"        pm.collectionVariables.set('auth_token', response.data.token);",
+									"        pm.collectionVariables.set('user_id', response.data.user.id);",
+									"        pm.collectionVariables.set('refresh_token', response.data.refreshToken);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"+919876543210\",\n  \"password\": \"Password123\",\n  \"dateOfBirth\": \"1990-05-15\",\n  \"gender\": \"male\",\n  \"bloodGroup\": \"O+\",\n  \"weight\": 70,\n  \"height\": 175,\n  \"address\": {\n    \"street\": \"123 Main Street\",\n    \"city\": \"Mumbai\",\n    \"district\": \"Mumbai\",\n    \"state\": \"Maharashtra\",\n    \"pincode\": \"400001\"\n  },\n  \"emergencyContact\": {\n    \"name\": \"Jane Doe\",\n    \"relationship\": \"Wife\",\n    \"phone\": \"+919876543211\",\n    \"email\": \"jane.doe@example.com\"\n  },\n  \"userType\": \"donor\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					}
+				},
+				{
+					"name": "Register Hospital",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"City General Hospital\",\n  \"email\": \"admin@cityhospital.com\",\n  \"phone\": \"+912233445566\",\n  \"password\": \"Hospital123\",\n  \"dateOfBirth\": \"1980-01-01\",\n  \"gender\": \"other\",\n  \"bloodGroup\": \"O+\",\n  \"weight\": 70,\n  \"height\": 170,\n  \"address\": {\n    \"street\": \"456 Hospital Road\",\n    \"city\": \"Delhi\",\n    \"district\": \"Central Delhi\",\n    \"state\": \"Delhi\",\n    \"pincode\": \"110001\"\n  },\n  \"emergencyContact\": {\n    \"name\": \"Emergency Desk\",\n    \"relationship\": \"Hospital Staff\",\n    \"phone\": \"+912233445567\",\n    \"email\": \"emergency@cityhospital.com\"\n  },\n  \"userType\": \"hospital\",\n  \"hospitalInfo\": {\n    \"hospitalName\": \"City General Hospital\",\n    \"hospitalType\": \"government\",\n    \"licenseNumber\": \"HOSP123456\",\n    \"registrationNumber\": \"REG789012\",\n    \"establishedYear\": 1995,\n    \"bedCapacity\": 500,\n    \"specializations\": [\"Cardiology\", \"Neurology\", \"Emergency Medicine\"],\n    \"facilities\": [\"Blood Bank\", \"ICU\", \"Emergency Room\", \"Laboratory\"],\n    \"operatingHours\": {\n      \"is24x7\": true\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					}
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.data.token) {",
+									"        pm.collectionVariables.set('auth_token', response.data.token);",
+									"        pm.collectionVariables.set('user_id', response.data.user.id);",
+									"        pm.collectionVariables.set('refresh_token', response.data.refreshToken);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"Password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					}
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"currentPassword\": \"Password123\",\n  \"newPassword\": \"NewPassword123\",\n  \"confirmPassword\": \"NewPassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/change-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"change-password"
+							]
+						}
+					}
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john.doe@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/forgot-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"forgot-password"
+							]
+						}
+					}
+				},
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.data.token) {",
+									"        pm.collectionVariables.set('auth_token', response.data.token);",
+									"        pm.collectionVariables.set('refresh_token', response.data.refreshToken);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refreshToken\": \"{{refresh_token}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/refresh-token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"refresh-token"
+							]
+						}
+					}
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "👥 User Management",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users?page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Donors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/donors?bloodGroup=O+&city=Mumbai&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"donors"
+							],
+							"query": [
+								{
+									"key": "bloodGroup",
+									"value": "O+"
+								},
+								{
+									"key": "city",
+									"value": "Mumbai"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Hospitals",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/hospitals?city=Delhi&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"hospitals"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "Delhi"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update User Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phone\": \"+919876543299\",\n  \"weight\": 72,\n  \"preferences\": {\n    \"notifications\": {\n      \"email\": true,\n      \"sms\": true,\n      \"push\": false\n    },\n    \"privacy\": {\n      \"showPhone\": true,\n      \"showEmail\": false,\n      \"showAddress\": true\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Dashboard Stats (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/stats/dashboard",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"stats",
+								"dashboard"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🩸 Blood Requests",
+			"item": [
+				{
+					"name": "Create Blood Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"patientName\": \"Alice Johnson\",\n  \"patientAge\": 35,\n  \"patientGender\": \"female\",\n  \"bloodGroup\": \"A+\",\n  \"bloodComponent\": \"whole_blood\",\n  \"unitsRequired\": 2,\n  \"urgencyLevel\": \"urgent\",\n  \"medicalCondition\": \"Severe anemia due to surgery complications\",\n  \"doctorName\": \"Dr. Smith Wilson\",\n  \"doctorContact\": \"+919876543220\",\n  \"hospitalName\": \"City General Hospital\",\n  \"hospitalAddress\": {\n    \"street\": \"456 Hospital Road\",\n    \"city\": \"Delhi\",\n    \"district\": \"Central Delhi\",\n    \"state\": \"Delhi\",\n    \"pincode\": \"110001\"\n  },\n  \"requiredBy\": \"2024-12-31T18:00:00.000Z\",\n  \"description\": \"Patient requires urgent blood transfusion post-surgery\",\n  \"contactPerson\": {\n    \"name\": \"Bob Johnson\",\n    \"relationship\": \"Husband\",\n    \"phone\": \"+919876543221\",\n    \"email\": \"bob.johnson@example.com\"\n  },\n  \"isEmergency\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/blood-requests",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"blood-requests"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Blood Requests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/blood-requests?bloodGroup=A+&city=Delhi&urgency=urgent&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"blood-requests"
+							],
+							"query": [
+								{
+									"key": "bloodGroup",
+									"value": "A+"
+								},
+								{
+									"key": "city",
+									"value": "Delhi"
+								},
+								{
+									"key": "urgency",
+									"value": "urgent"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Blood Request by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/blood-requests/REQUEST_ID_HERE",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"blood-requests",
+								"REQUEST_ID_HERE"
+							]
+						}
+					}
+				},
+				{
+					"name": "Respond to Blood Request (Donor)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"I am available to donate blood. Please contact me.\",\n  \"contactInfo\": {\n    \"phone\": \"+919876543210\",\n    \"email\": \"john.doe@example.com\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/blood-requests/REQUEST_ID_HERE/respond",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"blood-requests",
+								"REQUEST_ID_HERE",
+								"respond"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Response Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"confirmed\",\n  \"message\": \"Donor confirmed for donation appointment\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/blood-requests/REQUEST_ID_HERE/responses/DONOR_ID_HERE",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"blood-requests",
+								"REQUEST_ID_HERE",
+								"responses",
+								"DONOR_ID_HERE"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Blood Request Stats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/blood-requests/stats/dashboard",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"blood-requests",
+								"stats",
+								"dashboard"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "💉 Donations",
+			"item": [
+				{
+					"name": "Schedule Donation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"scheduledDate\": \"2024-12-25T10:00:00.000Z\",\n  \"timeSlot\": {\n    \"start\": \"10:00\",\n    \"end\": \"11:00\"\n  },\n  \"donationType\": \"voluntary\",\n  \"bloodComponent\": \"whole_blood\",\n  \"hospital\": \"HOSPITAL_ID_HERE\",\n  \"hospitalName\": \"City General Hospital\",\n  \"collectionCenter\": {\n    \"name\": \"Main Blood Bank\",\n    \"address\": \"456 Hospital Road, Delhi\",\n    \"contactPhone\": \"+912233445566\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/donations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"donations"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Donations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/donations?status=scheduled&page=1&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"donations"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "scheduled"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Donation by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/donations/DONATION_ID_HERE",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"donations",
+								"DONATION_ID_HERE"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Donation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"preScreening\": {\n    \"weight\": 70,\n    \"bloodPressure\": {\n      \"systolic\": 120,\n      \"diastolic\": 80\n    },\n    \"pulse\": 72,\n    \"temperature\": 36.5,\n    \"hemoglobin\": 14.5,\n    \"screeningNotes\": \"All parameters normal\",\n    \"screenedBy\": \"Nurse Mary\"\n  },\n  \"status\": \"in_progress\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/donations/DONATION_ID_HERE",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"donations",
+								"DONATION_ID_HERE"
+							]
+						}
+					}
+				},
+				{
+					"name": "Complete Donation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"donationProcess\": {\n    \"startTime\": \"2024-12-25T10:00:00.000Z\",\n    \"endTime\": \"2024-12-25T10:45:00.000Z\",\n    \"bagNumber\": \"BAG123456\",\n    \"volume\": 450,\n    \"collectedBy\": \"Dr. Johnson\"\n  },\n  \"postDonationCare\": {\n    \"restPeriod\": 15,\n    \"refreshmentsProvided\": true,\n    \"instructions\": \"Rest for 24 hours, drink plenty of fluids\"\n  },\n  \"bloodTesting\": {\n    \"testingDate\": \"2024-12-25T12:00:00.000Z\",\n    \"testResults\": {\n      \"bloodGroup\": \"O+\",\n      \"rhFactor\": \"positive\",\n      \"hiv\": \"negative\",\n      \"hepatitisB\": \"negative\",\n      \"hepatitisC\": \"negative\",\n      \"syphilis\": \"negative\",\n      \"malaria\": \"negative\"\n    },\n    \"qualityGrade\": \"A\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/donations/DONATION_ID_HERE/complete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"donations",
+								"DONATION_ID_HERE",
+								"complete"
+							]
+						}
+					}
+				},
+				{
+					"name": "Cancel Donation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"reason\": \"Donor not feeling well\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/donations/DONATION_ID_HERE/cancel",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"donations",
+								"DONATION_ID_HERE",
+								"cancel"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Donation Stats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/donations/stats/overview",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"donations",
+								"stats",
+								"overview"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "📊 Sample Data & Utilities",
+			"item": [
+				{
+					"name": "Get Sample Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sample-data",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sample-data"
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}

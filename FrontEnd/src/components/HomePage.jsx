@@ -22,24 +22,35 @@ export default function HomePage() {
     <div className="container">
       <Header />
       <main className="main-content">
-        <h1 className="main-title">"A HeartBeat Fades Where a Hero Hesitates..."</h1>
-        <h2 className="section-title">LEARN ABOUT DONATION</h2>
+        <div className="hero-section">
+          <h1 className="main-title">"A HeartBeat Fades Where a Hero Hesitates..."</h1>
+          <div className="subtitle-container">
+            <p className="subtitle">Every drop counts. Every donation saves lives. Be the hero someone needs today.</p>
+          </div>
+        </div>
+        
+        <div className="donation-section">
+          <h2 className="section-title">LEARN ABOUT DONATION</h2>
+          <p className="section-description">
+            Discover your blood type compatibility and learn how you can make a difference
+          </p>
 
-        <div className="blood-groups">
-          {Object.keys(bloodInfo).map((group) => (
-            <div key={group} className="platelet-wrapper">
-              <div
-                className="blood-group"
-                onMouseEnter={() => setHoveredGroup(group)}
-                onMouseLeave={() => setHoveredGroup("")}
-              >
-                {group}
-                {hoveredGroup === group && (
-                  <div className="tooltip">{bloodInfo[group]}</div>
-                )}
+          <div className="blood-groups">
+            {Object.keys(bloodInfo).map((group, index) => (
+              <div key={group} className="platelet-wrapper" style={{animationDelay: `${index * 0.1}s`}}>
+                <div
+                  className="blood-group"
+                  onMouseEnter={() => setHoveredGroup(group)}
+                  onMouseLeave={() => setHoveredGroup("")}
+                >
+                  <span className="blood-type">{group}</span>
+                  {hoveredGroup === group && (
+                    <div className="tooltip">{bloodInfo[group]}</div>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         <Footer />

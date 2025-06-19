@@ -2,14 +2,37 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
-  background-color: black;
+  background: linear-gradient(135deg, #000000 0%, #1a0000 50%, #000000 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
   min-height: 100vh;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .container {
   width: 100%;
   min-height: 100vh;
-  background-color: black;
+  background: transparent;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(174, 16, 16, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(174, 16, 16, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .main-content {
@@ -17,15 +40,29 @@ body, html {
   padding: 40px 20px;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .main-title {
   font-size: 48px;
   font-weight: bold;
-  color: white;
+  background: linear-gradient(45deg, #ffffff, #ff6b6b, #ffffff);
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textGradient 3s ease-in-out infinite;
   margin-bottom: 30px;
   line-height: 1.2;
   margin-top: 130px;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+  position: relative;
+}
+
+@keyframes textGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .section-title {
@@ -34,22 +71,38 @@ body, html {
   color: rgb(174, 16, 16);
   margin-bottom: 30px;
   letter-spacing: 2px;
+  position: relative;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(174, 16, 16, 0.5);
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgb(174, 16, 16), transparent);
+  border-radius: 2px;
 }
 
 .blood-groups {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 25px;
-  margin-top: 30px;
+  gap: 30px;
+  margin-top: 50px;
   max-width: 860px;
   margin-left: auto;
   margin-right: auto;
   padding-top: 50px;
+  perspective: 1000px;
 }
 
 .blood-group {
-  background-color: rgb(118, 118, 118);
+  background: linear-gradient(135deg, rgb(118, 118, 118), rgb(90, 90, 90));
   color: white;
   font-size: 20px;
   font-weight: bold;
@@ -62,67 +115,161 @@ body, html {
   align-items: center;
   position: relative;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.blood-group::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(174, 16, 16, 0.8), rgba(174, 16, 16, 0.9));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-radius: 50%;
 }
 
 .blood-group:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  background-color: rgb(174, 16, 16);
+  transform: scale(1.15) rotateY(10deg);
+  box-shadow: 0 15px 40px rgba(174, 16, 16, 0.4), 
+              0 5px 15px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: rgba(174, 16, 16, 0.5);
+}
+
+.blood-group:hover::before {
+  opacity: 1;
+}
+
+.blood-group:hover {
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
 .tooltip {
   position: absolute;
-  top: -120px;
+  top: -130px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #ffffff;
-  color: black;
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 8px;
-  width: 250px;
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  color: #333;
+  border: 1px solid rgba(174, 16, 16, 0.2);
+  padding: 18px;
+  border-radius: 12px;
+  width: 260px;
   font-size: 14px;
   font-weight: normal;
   text-align: center;
   z-index: 200;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  animation: fadeIn 0.3s ease-in-out;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 
+              0 5px 15px rgba(174, 16, 16, 0.1);
+  animation: tooltipSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(10px);
+  border-left: 4px solid rgb(174, 16, 16);
 }
 
 .tooltip::after {
   content: '';
   position: absolute;
-  bottom: -8px;
+  bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
   width: 0;
   height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid #ffffff;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #ffffff;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
-@keyframes fadeIn {
+@keyframes tooltipSlideIn {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateX(-50%) translateY(15px) scale(0.9);
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%) translateY(0) scale(1);
   }
 }
 
 .platelet-wrapper {
-  animation: floatUpDown 2s ease-in-out infinite;
+  animation: floatUpDown 3s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.platelet-wrapper:nth-child(odd) {
+  animation-delay: -1s;
+}
+
+.platelet-wrapper:nth-child(even) {
+  animation-delay: -2s;
 }
 
 @keyframes floatUpDown {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-9px); }
-  100% { transform: translateY(0); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-8px) rotate(1deg); }
+  50% { transform: translateY(-12px) rotate(0deg); }
+  75% { transform: translateY(-8px) rotate(-1deg); }
+}
+
+.hero-section {
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.subtitle-container {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.donation-section {
+  position: relative;
+}
+
+.section-description {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 40px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+  font-weight: 300;
+}
+
+.blood-type {
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
 }
 
 @media (max-width: 768px) {
