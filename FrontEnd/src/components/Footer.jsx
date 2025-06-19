@@ -18,7 +18,9 @@ const Footer = () => {
           <ul>
              <Link to="/gallery">About blood donation</Link>
              <br></br>
+             <br></br>
               <Link to="/login">Donor Login</Link>
+              <br></br>
               <br></br>
                <Link to="/login">Receiver login</Link>
           </ul>
@@ -45,11 +47,11 @@ const Footer = () => {
       </div>
 
       <div className="footer-logos">
-        <img src="/" alt="FindMyDonor" />
-        <img src="/ministry_logo.png" alt="Ministry Logo" />
-        <img src="/mobileapp_logo.png" alt="Mobile App" />
-        <img src="/nhp_logo.png" alt="NHP India" />
-        <img src="/india_logo.png" alt="India.gov.in" />
+        <img src="https://t4.ftcdn.net/jpg/10/08/29/09/360_F_1008290988_URO1T4omQhleLR0Iy0Z2wTLK26BMDwXo.jpg" alt="FindMyDonor" />
+        <img src="https://pbs.twimg.com/media/FCM8GaZUYAccsV5.jpg:large" alt="Ministry Logo" />
+        <img src="https://mir-s3-cdn-cf.behance.net/projects/404/d67f72141526863.Y3JvcCw1NTIwLDQzMTcsMCww.png" alt="Mobile App" />
+        <img src="https://www.rvsolutions.in/wp-content/uploads/2024/06/National-Health-Portal.jpg" alt="NHP India" />
+        <img src="https://www.logopeople.in/wp-content/uploads/2013/01/government-of-india.jpg" alt="India.gov.in" />
       </div>
 
       <div className="footer-bottom">
@@ -62,5 +64,4 @@ const Footer = () => {
     </footer>
   );
 };
-
 export default Footer;

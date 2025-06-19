@@ -2,7 +2,7 @@
   text-align: center;
   font-family: Arial, sans-serif;
   padding: 100px;
-  background-color: rgb(19, 1, 1);
+  background-color: black;
   
 }
 
@@ -41,6 +41,7 @@ select {
 
 .search-button {
   margin-top: 40px;
+  width: 150px;
   padding: 12px 32px;
   font-size: 1.1rem;
   font-weight: bold;

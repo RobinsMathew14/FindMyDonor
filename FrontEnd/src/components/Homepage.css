@@ -25,7 +25,7 @@ body, html {
   color: white;
   margin-bottom: 30px;
   line-height: 1.2;
-  margin-top: 80px;
+  margin-top: 130px;
 }
 
 .section-title {
@@ -78,7 +78,7 @@ body, html {
   left: 50%;
   transform: translateX(-50%);
   background-color: #ffffff;
-  color: grey;
+  color: black;
   border: 1px solid #ddd;
   padding: 15px;
   border-radius: 8px;

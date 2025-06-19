@@ -298,7 +298,6 @@
   margin: 0;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .main-container {
     padding: 24px 16px;
